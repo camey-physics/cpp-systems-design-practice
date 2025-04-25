@@ -63,3 +63,16 @@ int SharedPtr::useCount() const {
         return *ref_count_;
     }
 }
+
+const int* SharedPtr::get() const {
+    return ptr_;
+}
+
+int& SharedPtr::operator*() {
+    assert(ptr_ != nullptr);
+    return *ptr_;
+}
+const int& SharedPtr::operator*() const {
+    assert(ptr_ != nullptr);
+    return *ptr_; 
+}

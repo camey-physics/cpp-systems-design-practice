@@ -8,8 +8,11 @@ class SharedPtr {
         SharedPtr(const SharedPtr& other);
         ~SharedPtr();
         SharedPtr& operator=(const SharedPtr& other);
+        int& operator*();
+        const int& operator*() const;
 
         int useCount() const;
+        const int* get() const;
 
     private:
         int* ptr_ = nullptr;
