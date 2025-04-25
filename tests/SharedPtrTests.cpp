@@ -37,4 +37,5 @@ TEST(SharedPtrTest, DereferenceTest) {
     SharedPtr sp2 = sp;
     *sp2 = 30;
     EXPECT_EQ(*sp, 30);
+    SharedPtr sp2;
 }
