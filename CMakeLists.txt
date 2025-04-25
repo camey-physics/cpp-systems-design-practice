@@ -4,31 +4,27 @@ project(cpp_systems_practice LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Include headers
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+# Glob source files (basic version)
+file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+
+# Create the shared_ptr_library target
+add_library(shared_ptr_library ${SRC_FILES})
+
+# Link tests
 enable_testing()
 
-# === SharedPtr ===
-add_library(shared_ptr
-    shared_ptr/SharedPtr.cpp
-)
-target_include_directories(shared_ptr PUBLIC shared_ptr)
+# Fetch GoogleTest if needed (optional; assume already available here)
+find_package(GTest REQUIRED)
 
-add_executable(SharedPtrTest
-    tests/SharedPtrTest.cpp
-)
-target_link_libraries(SharedPtrTest PRIVATE shared_ptr GTest::gtest_main)
+# Build tests
+file(GLOB TEST_FILES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
 
-include(GoogleTest)
-gtest_discover_tests(SharedPtrTest)
-
-# === Vector (planned) ===
-# add_library(vector_impl
-#     vector/Vector.cpp
-# )
-# target_include_directories(vector_impl PUBLIC vector)
-#
-# add_executable(VectorTest
-#     tests/VectorTest.cpp
-# )
-# target_link_libraries(VectorTest PRIVATE vector_impl GTest::gtest_main)
-#
-# gtest_discover_tests(VectorTest)
+foreach(test_src ${TEST_FILES})
+    get_filename_component(test_name ${test_src} NAME_WE)
+    add_executable(${test_name} ${test_src})
+    target_link_libraries(${test_name} PRIVATE shared_ptr_library GTest::gtest_main)
+    gtest_discover_tests(${test_name})
+endforeach()
