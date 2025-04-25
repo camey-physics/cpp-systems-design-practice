@@ -3,8 +3,7 @@
 
 class SharedPtr {
     public:
-        SharedPtr() {};
-        SharedPtr(int size);
+        SharedPtr(int value = 0);
         SharedPtr(const SharedPtr& other);
         ~SharedPtr();
         SharedPtr& operator=(const SharedPtr& other);

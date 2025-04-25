@@ -9,14 +9,27 @@ TEST(SharedPtrTest, BasicUseCount) {
     SharedPtr sp3(20);
     sp3 = sp2;
     EXPECT_EQ(sp.useCount(), 3);
-    for (int i = 0; i < 5; i++) {
-        SharedPtr spTemp = sp3;
-    }
-    EXPECT_EQ(sp.useCount(), 3);
+    SharedPtr sp4 = sp;
+    EXPECT_EQ(sp.useCount(), 4);
 }
 
-// TEST(SharedPtrTest, BasicUseCount) {
-//     SharedPtr sp(10), sp2;
-//     sp2 = sp;
-//     EXPECT_EQ(sp.useCount(), 2);
-// }
+TEST(SharedPtrTest, DestructorTest) {
+    SharedPtr sp(10);
+    for (int i = 0; i < 5; i++) {
+        SharedPtr spTemp = sp;
+    }
+    EXPECT_EQ(sp.useCount(), 1);
+    {
+        SharedPtr spTemp = sp;
+        SharedPtr spTemp2 = sp;
+        EXPECT_EQ(sp.useCount(), 3);
+    }
+    EXPECT_EQ(sp.useCount(), 1);
+}
+
+TEST(SharedPtrTest, DereferenceTest) {
+    SharedPtr sp(10);
+    for (int i = 0; i < 10; i++) {
+        
+    }
+}

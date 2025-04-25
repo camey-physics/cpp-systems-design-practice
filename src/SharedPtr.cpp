@@ -20,7 +20,7 @@ void SharedPtr::decrementAndCleanup() {
         *ref_count_ -= 1;
     }
     else {
-        delete[] ptr_;
+        delete ptr_;
         delete ref_count_;
     }
 }
@@ -29,8 +29,8 @@ SharedPtr::~SharedPtr() {
     decrementAndCleanup();
 }
 
-SharedPtr::SharedPtr(int size) {
-    ptr_ = new int[size];
+SharedPtr::SharedPtr(int value) {
+    ptr_ = new int(value);
     ref_count_ = new int;
     *ref_count_ = 1;
 }
