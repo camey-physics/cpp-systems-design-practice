@@ -12,6 +12,9 @@ class SharedPtr {
     private:
         int* ptr_ = nullptr;
         int* ref_count_ = nullptr;
+
+        void incrementRefCount();
+        void decrementAndCleanup();
 };
 
 #endif
