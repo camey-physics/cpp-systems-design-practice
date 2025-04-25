@@ -9,6 +9,8 @@ class SharedPtr {
         ~SharedPtr();
         SharedPtr& operator=(const SharedPtr& other);
 
+        int useCount() const;
+
     private:
         int* ptr_ = nullptr;
         int* ref_count_ = nullptr;

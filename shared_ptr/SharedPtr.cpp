@@ -54,3 +54,12 @@ SharedPtr& SharedPtr::operator=(const SharedPtr& other){
     incrementRefCount();
     return *this;
 }
+
+int SharedPtr::useCount() const {
+    if (ref_count_ == nullptr) {
+        return 0;
+    }
+    else {
+        return *ref_count_;
+    }
+}
