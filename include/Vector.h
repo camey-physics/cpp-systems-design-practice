@@ -1,12 +1,11 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <stdexcept>
+
 /*
 To Do:
 push_back, pop_back
-operator[]
-size()
-at()
 Possibly resize or reserve for memory management.
 */
 
@@ -19,6 +18,9 @@ class Vector {
         Vector& operator=(const Vector& other);
         T& operator[](unsigned long i);
         const T& operator[](unsigned long i) const;
+        T& at(unsigned long i);
+        const T& at(unsigned long i) const;
+        void reserve(unsigned long capacity);
 
         unsigned long size() const { return size_; };
 
@@ -26,13 +28,14 @@ class Vector {
     private:
         T* ptr_ = nullptr;
         unsigned long size_;
+        unsigned long capacity_;
 
         // Helper functions
         void copyFrom(const Vector& other);
 };
 
 template <typename T>
-Vector<T>::Vector(unsigned long size, T value) : size_(size) {
+Vector<T>::Vector(unsigned long size, T value) : size_(size), capacity_(size) {
     if (size_ > 0) {
         ptr_ = new T[size_];
         for (unsigned long i = 0; i < size_; ++i) {
@@ -74,6 +77,25 @@ const T& Vector<T>::operator[](unsigned long i) const {
     return ptr_[i];
 }
 
+template <typename T>
+T& Vector<T>::at(unsigned long i) {
+    if (i < size_) {
+        return ptr_[i];
+    }
+    else {
+        throw std::out_of_range("Index out of range");
+    }
+}
+
+template <typename T>
+const T& Vector<T>::at(unsigned long i) const {
+    if (i < size_) {
+        return ptr_[i];
+    }
+    else {
+        throw std::out_of_range("Index out of range");
+    }
+}
 template <typename T>
 void Vector<T>::copyFrom(const Vector<T>& other) {
     size_ = other.size_;
