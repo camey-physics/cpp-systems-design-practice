@@ -17,6 +17,11 @@ class Vector {
         ~Vector();
         Vector(const Vector& other);
         Vector& operator=(const Vector& other);
+        T& operator[](unsigned long i);
+        const T& operator[](unsigned long i) const;
+
+        unsigned long size() const { return size_; };
+
 
     private:
         T* ptr_ = nullptr;
@@ -57,6 +62,16 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
     delete[] ptr_;
     copyFrom(other);
     return *this;
+}
+
+template<typename T>
+T& Vector<T>::operator[](unsigned long i) {
+    return ptr_[i];
+}
+
+template<typename T>
+const T& Vector<T>::operator[](unsigned long i) const {
+    return ptr_[i];
 }
 
 template <typename T>
