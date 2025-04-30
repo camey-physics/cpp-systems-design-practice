@@ -4,7 +4,9 @@
 /*
 To Do:
 push_back, pop_back
-operator[] for element access
+operator[]
+size()
+at()
 Possibly resize or reserve for memory management.
 */
 
@@ -19,6 +21,9 @@ class Vector {
     private:
         T* ptr_ = nullptr;
         unsigned long size_;
+
+        // Helper functions
+        void copyFrom(const Vector& other);
 };
 
 template <typename T>
@@ -37,6 +42,35 @@ Vector<T>::Vector(unsigned long size, T value) : size_(size) {
 template <typename T>
 Vector<T>::~Vector() {
     delete[] ptr_;
+}
+
+template <typename T>
+Vector<T>::Vector(const Vector& other) {
+    copyFrom(other);
+}
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete[] ptr_;
+    copyFrom(other);
+    return *this;
+}
+
+template <typename T>
+void Vector<T>::copyFrom(const Vector<T>& other) {
+    size_ = other.size_;
+    if (size_ > 0) {
+        ptr_ = new T[size_];
+        for (unsigned long i = 0; i < size_; ++i) {
+            ptr_[i] = other.ptr_[i];
+        }
+    }
+    else {
+        ptr_ = nullptr;
+    }
 }
 
 #endif
