@@ -7,11 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Include headers
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Glob source files (basic version)
-file(GLOB SRC_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-
-# Create the shared_ptr_library target
-add_library(shared_ptr_library ${SRC_FILES})
+# Create the shared_ptr_library target - No source files needed
+add_library(shared_ptr_library INTERFACE)  # Use INTERFACE for templates
 
 # Link tests
 enable_testing()
