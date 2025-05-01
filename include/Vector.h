@@ -7,6 +7,7 @@
 To Do:
 push_back, pop_back
 Possibly resize or reserve for memory management.
+Can update copy operator so that if capacity_ > other.size_, ptr_ is not deleted.
 */
 
 template <typename T>
@@ -21,6 +22,7 @@ class Vector {
         T& at(unsigned long i);
         const T& at(unsigned long i) const;
         void reserve(unsigned long capacity);
+        void resize(unsigned long newSize);
 
         unsigned long size() const { return size_; };
 
@@ -96,9 +98,37 @@ const T& Vector<T>::at(unsigned long i) const {
         throw std::out_of_range("Index out of range");
     }
 }
+
+template <typename T>
+void Vector<T>::reserve(unsigned long capacity) {
+    if (capacity <= size_) {
+        return;
+    }
+    T* tmpPtr = new T[capacity];
+    for (unsigned long i = 0; i < size_; ++i) {
+        tmpPtr[i] = ptr_[i];
+    }
+    delete[] ptr_;
+    ptr_ = tmpPtr;
+    capacity_ = capacity;
+
+}
+
+template <typename T>
+void Vector<T>::resize(unsigned long newSize) {
+    if (newSize > size_) {
+        reserve(newSize);
+        for (unsigned long i = size_; i < newSize; ++i) {
+            ptr_[i] = T();
+        }
+    }    
+    size_ = newSize;
+}
+
 template <typename T>
 void Vector<T>::copyFrom(const Vector<T>& other) {
     size_ = other.size_;
+    capacity_ = size_;
     if (size_ > 0) {
         ptr_ = new T[size_];
         for (unsigned long i = 0; i < size_; ++i) {
