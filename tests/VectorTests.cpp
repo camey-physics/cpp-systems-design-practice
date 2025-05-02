@@ -31,3 +31,30 @@ TEST(VectorTest, OutOfBoundsErrorWithAt) {
     Vector<float> v2(10, 3.141592653589793);
     EXPECT_THROW(v2.at(11), std::out_of_range);
 }
+
+TEST(VectorTest, Size) {
+    Vector<unsigned short> v(10,0);
+    EXPECT_EQ(v.size(), 10);
+}
+
+TEST(VectorTest, Reserve) {
+    Vector<char> v;
+    v.reserve(10);
+    EXPECT_EQ(v.capacity(), 10);
+}
+
+TEST(VectorTest, Resize) {
+    Vector<int> v(10,0);
+    v.resize(20);
+    EXPECT_EQ(v.size(), 20);
+}
+
+TEST(VectorTest, PopBack) {
+    Vector<float> v(10);
+    v.pop_back();
+    EXPECT_EQ(v.size(), 9);
+    EXPECT_EQ(v.capacity(), 10);
+}
+
+// TEST(VectorTest, push_back) {
+// }
