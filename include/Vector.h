@@ -5,8 +5,7 @@
 
 /*
 To Do:
-push_back, pop_back
-Possibly resize or reserve for memory management.
+push_back
 Can update copy operator so that if capacity_ > other.size_, ptr_ is not deleted.
 */
 
@@ -23,8 +22,11 @@ class Vector {
         const T& at(unsigned long i) const;
         void reserve(unsigned long capacity);
         void resize(unsigned long newSize);
+        void pop_back();
+        // void push_back();
 
         unsigned long size() const { return size_; };
+        unsigned long capacity() const { return capacity_; };
 
 
     private:
@@ -123,6 +125,13 @@ void Vector<T>::resize(unsigned long newSize) {
         }
     }    
     size_ = newSize;
+}
+
+template <typename T>
+void Vector<T>::pop_back() {
+    if (size_ > 0) {
+        size_ -= 1;
+    }
 }
 
 template <typename T>
