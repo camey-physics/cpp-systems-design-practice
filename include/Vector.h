@@ -27,6 +27,8 @@ class Vector {
 
         unsigned long size() const { return size_; };
         unsigned long capacity() const { return capacity_; };
+        T* data() { return ptr_; }
+        const T* data() const { return ptr_; }
 
 
     private:
@@ -66,8 +68,18 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
     if (this == &other) {
         return *this;
     }
-    delete[] ptr_;
-    copyFrom(other);
+    if (other.size_ <= capacity_) {
+        for (unsigned long i = 0; i < other.size_; ++i) {
+            ptr_[i] = other.ptr_[i];
+        }
+        size_ = other.size_;
+    }
+    else {
+        delete[] ptr_;
+        capacity_ = 0;
+        ptr_ = nullptr;
+        copyFrom(other);
+    }
     return *this;
 }
 
