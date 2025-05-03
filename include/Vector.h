@@ -103,7 +103,7 @@ const T& Vector<T>::at(unsigned long i) const {
 
 template <typename T>
 void Vector<T>::reserve(unsigned long capacity) {
-    if (capacity <= size_) {
+    if (capacity <= capacity_) {
         return;
     }
     T* tmpPtr = new T[capacity];
