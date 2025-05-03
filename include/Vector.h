@@ -23,7 +23,7 @@ class Vector {
         void reserve(unsigned long capacity);
         void resize(unsigned long newSize);
         void pop_back();
-        // void push_back();
+        void push_back(T value);
 
         unsigned long size() const { return size_; };
         unsigned long capacity() const { return capacity_; };
@@ -132,6 +132,15 @@ void Vector<T>::pop_back() {
     if (size_ > 0) {
         size_ -= 1;
     }
+}
+
+template <typename T>
+void Vector<T>::push_back(T value) {
+    if (capacity_ < 1 + size_) {
+        reserve((1 + size_) *2);
+    }
+    size_ += 1;
+    ptr_[size_ - 1] = value;
 }
 
 template <typename T>

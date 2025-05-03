@@ -56,5 +56,10 @@ TEST(VectorTest, PopBack) {
     EXPECT_EQ(v.capacity(), 10);
 }
 
-// TEST(VectorTest, push_back) {
-// }
+TEST(VectorTest, PushBack) {
+    Vector<float> v(10, 0);
+    v.push_back(3.1415);
+    EXPECT_EQ(v.size(), 11);
+    EXPECT_NEAR(v[10], 3.1415, 1e-7);
+    EXPECT_EQ(v.capacity(), 22);
+}
