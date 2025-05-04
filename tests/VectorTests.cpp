@@ -108,3 +108,27 @@ TEST(VectorTest, DataPointerMatchesIndexZero) {
     Vector<int> v(10, 6);
     EXPECT_EQ(v.data(), &v[0]);
 }
+
+TEST(VectorTest, ShrinkToCapacity) {
+    Vector<int> v;
+    v.reserve(20);
+    v.resize(10);
+    EXPECT_EQ(v.size(), 10);
+    EXPECT_EQ(v.capacity(), 20);
+    int* oldPtr = v.data();
+    v.shrink_to_fit();
+    EXPECT_EQ(v.capacity(), 10);
+    EXPECT_NE(v.data(), oldPtr);
+}
+
+TEST(VectorTest, EmptyNoCapacity) {
+    Vector<int> v;
+    EXPECT_TRUE(v.empty());
+}
+
+TEST(VectorTest, EmptyWithCapacity) {
+    Vector<int> v(10,0);
+    v.resize(0);
+    EXPECT_EQ(v.capacity(), 10);
+    EXPECT_TRUE(v.empty());
+}
