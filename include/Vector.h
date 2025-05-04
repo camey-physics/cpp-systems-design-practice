@@ -24,7 +24,9 @@ class Vector {
         void resize(unsigned long newSize);
         void pop_back();
         void push_back(T value);
+        void shrink_to_fit();
 
+        bool empty() const;
         unsigned long size() const { return size_; };
         unsigned long capacity() const { return capacity_; };
         T* data() { return ptr_; }
@@ -153,6 +155,27 @@ void Vector<T>::push_back(T value) {
     }
     size_ += 1;
     ptr_[size_ - 1] = value;
+}
+
+template <typename T>
+void Vector<T>::shrink_to_fit() {
+    if (capacity_ > size_) {
+        T* tmpPtr = ptr_;
+        ptr_ = new T[size_];
+        for (unsigned long i = 0; i < size_; ++i) {
+            ptr_[i] = tmpPtr[i];
+        }
+        delete[] tmpPtr;
+        capacity_ = size_;
+    }
+}
+
+template <typename T>
+bool Vector<T>::empty() const {
+    if (size_ > 0) {
+        return false;
+    }
+    return true;
 }
 
 template <typename T>
