@@ -132,3 +132,19 @@ TEST(VectorTest, EmptyWithCapacity) {
     EXPECT_EQ(v.capacity(), 10);
     EXPECT_TRUE(v.empty());
 }
+
+TEST(VectorTest, BeginData) {
+    Vector<int> v(10,0);
+    for (int i = 0; i < 10; ++i) {
+        v[i] = i;
+    }
+    EXPECT_EQ(v[0], *(v.begin()));
+}
+
+TEST(VectorTest, EndData) {
+    Vector<int> v(10,0);
+    for (int i = 0; i < 10; ++i) {
+        v[i] = i;
+    }
+    EXPECT_EQ(v[9], *(v.end()-1));
+}
