@@ -27,11 +27,12 @@ class Vector {
         void shrink_to_fit();
 
         bool empty() const;
+        T* begin();
+        T* end();
         unsigned long size() const { return size_; };
         unsigned long capacity() const { return capacity_; };
         T* data() { return ptr_; }
         const T* data() const { return ptr_; }
-
 
     private:
         T* ptr_ = nullptr;
@@ -176,6 +177,16 @@ bool Vector<T>::empty() const {
         return false;
     }
     return true;
+}
+
+template <typename T>
+T* Vector<T>::begin() {
+    return ptr_;
+}
+
+template <typename T>
+T* Vector<T>::end() {
+    return (ptr_ + size_);
 }
 
 template <typename T>
