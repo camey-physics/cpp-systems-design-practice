@@ -1,3 +1,7 @@
+/*
+There are cleaner ways to implement remove() with less branching (e.g. dummy head node)
+*/
+
 #ifndef SINGLY_LINKED_H
 #define SINGLY_LINKED_H
 
@@ -10,12 +14,12 @@ class SinglyLinkedList {
         SinglyLinkedList(T data);
         ~SinglyLinkedList();
 
-        SinglyLinkedList(const SinglyLinkedList&) = delete; // Apparently googletest creates copies of objects when testing, so this will prevent seg faults related to double delete.
-        SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
+        // SinglyLinkedList(const SinglyLinkedList&) = delete;
+        // SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
         
         void prepend(T value);
         void append(T value);
-        // void remove(T value);
+        void remove(T value);
 
         T front() const;
         T end() const;
@@ -86,23 +90,38 @@ void SinglyLinkedList<T>::append(T value) {
     return;
 }
 
-// template <typename T>
-// void SinglyLinkedList<T>::remove(T value) {
-//     Node* prev, current = head_;
+template <typename T>
+void SinglyLinkedList<T>::remove(T value) {
+    Node* current = head_;
+    Node* prev;
 
-//     while (current->next != nullptr && current->data != value) {
-//         prev = current;
-//         current = current->next;
-//     }
-//     if (current->data == value) {
-//         prev->next = current->next;
-//         if (current == tail_) {
-//             tail_ = prev;
-//         }
-//         delete current;
-//     }
-//     return;
-// }
+    while (current != nullptr) {
+        if (current->data == value) {
+            if (current == head_) {
+                if (current == tail_) {
+                    head_ = nullptr;
+                    tail_ = nullptr;
+
+                }
+                else {
+                    head_ = current->next;
+                }
+            }
+            else if (current == tail_) {
+                tail_ = prev;
+                prev->next = nullptr;
+            }
+            else {
+                prev->next = current->next;
+            }
+            delete current;
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+    return;
+}
 
 template <typename T>
 T SinglyLinkedList<T>::front() const {

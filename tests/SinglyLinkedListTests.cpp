@@ -58,3 +58,30 @@ TEST(SinglyLinkedListTest, EmptyListAppendSeveralTimes) {
     l.append(30.0);
     EXPECT_NEAR(l.end(), 30.0, 1e-7);
 }
+
+TEST(SinglyLinkedListTest, RemoveElement) {
+    SinglyLinkedList<float> l;
+    l.append(10.0);
+    l.append(20.0);
+    l.append(30.0);
+    l.remove(20);
+    EXPECT_NEAR(l.end(), 30.0, 1e-7);
+}
+
+TEST(SinglyLinkedListTest, RemoveLastElement) {
+    SinglyLinkedList<float> l;
+    l.append(10.0);
+    l.append(20.0);
+    l.append(30.0);
+    l.remove(30);
+    EXPECT_NEAR(l.end(), 20.0, 1e-7);
+}
+
+TEST(SinglyLinkedListTest, RemoveFirstElement) {
+    SinglyLinkedList<float> l;
+    l.append(10.0);
+    l.append(20.0);
+    l.append(30.0);
+    l.remove(10);
+    EXPECT_NEAR(l.front(), 20.0, 1e-7);
+}
