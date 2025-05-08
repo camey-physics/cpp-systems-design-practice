@@ -85,3 +85,43 @@ TEST(SinglyLinkedListTest, RemoveFirstElement) {
     l.remove(10);
     EXPECT_NEAR(l.front(), 20.0, 1e-7);
 }
+
+TEST(SinglyLinkedListTest, EmptyListSize) {
+    SinglyLinkedList<float> l;
+    EXPECT_EQ(l.size(), 0);
+}
+
+TEST(SinglyLinkedListTest, NonEmptyConstructorSize) {
+    SinglyLinkedList<float> l(10);
+    EXPECT_EQ(l.size(), 1);
+}
+
+TEST(SinglyLinkedListTest, AppendedListSize) {
+    SinglyLinkedList<float> l(20);
+    l.append(10);
+    EXPECT_EQ(l.size(), 2);
+}
+
+TEST(SinglyLinkedListTest, PrependedListSize) {
+    SinglyLinkedList<float> l;
+    l.prepend(10);
+    EXPECT_EQ(l.size(), 1);
+}
+
+TEST(SinglyLinkedListTest, RemovedElementListSize) {
+    SinglyLinkedList<float> l(20);
+    l.prepend(10);
+    l.remove(10);
+    EXPECT_EQ(l.size(), 1);
+}
+
+TEST(SinglyLinkedListTest, SeveralRemovedElementsListSize) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 20; i++) {
+        l.prepend(i*2);
+    }
+    for (int i = 0; i < 10; i += 2) {
+        l.remove(i);
+    }
+    EXPECT_EQ(l.size(), 15);
+}
