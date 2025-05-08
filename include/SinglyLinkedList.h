@@ -25,6 +25,8 @@ class SinglyLinkedList {
         T end() const;
         bool contains(T value);
 
+        unsigned long size() const {return size_;}
+
     private:
         struct Node {
             Node* next;
@@ -33,9 +35,7 @@ class SinglyLinkedList {
         };
         Node* head_;
         Node* tail_;
-
-        // void deleteNextNode(Node* node);
-
+        unsigned long size_;
 
 };
 
@@ -43,6 +43,7 @@ template <typename T>
 SinglyLinkedList<T>::SinglyLinkedList() {
     head_ = nullptr;
     tail_ = nullptr;
+    size_ = 0;
 }
 
 template <typename T>
@@ -51,16 +52,13 @@ SinglyLinkedList<T>::SinglyLinkedList(T data) {
     head_->data = data;
     head_->next = nullptr;
     tail_ = head_;
-    std::cout << "New head_: " << head_ << "\n";
-    std::cout << "New tail_: " << tail_ << "\n";
-
+    size_ = 1;
 }
 
 template <typename T>
 SinglyLinkedList<T>::~SinglyLinkedList() {
     Node* current = head_;
     while (current) {
-        std::cout << "Deleting node: " << current << "\n";
         Node* tmpNode = current;
         current = current->next;
         delete tmpNode;
@@ -75,6 +73,7 @@ void SinglyLinkedList<T>::prepend(T value) {
         tail_ = newNode;
     }
     head_ = newNode;
+    size_++;
     return;
 }
 
@@ -87,6 +86,7 @@ void SinglyLinkedList<T>::append(T value) {
     Node* newNode = new Node(value);
     tail_->next = newNode;
     tail_ = newNode;
+    size_++;
     return;
 }
 
@@ -115,6 +115,7 @@ void SinglyLinkedList<T>::remove(T value) {
                 prev->next = current->next;
             }
             delete current;
+            size_--;
             return;
         }
         prev = current;
@@ -154,14 +155,5 @@ bool SinglyLinkedList<T>::contains(T value) {
     }
     return false;
 }
-
-
-// template <typename T>
-// void SinglyLinkedList<T>::deleteNextNode(Node* node) {
-//     Node* delNode = node->next;
-//     node->next = delNode->next;
-//     delete delNode;
-//     return next;
-// }
 
 #endif
