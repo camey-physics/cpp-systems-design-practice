@@ -14,8 +14,10 @@ class SinglyLinkedList {
         SinglyLinkedList(T data);
         ~SinglyLinkedList();
 
-        // SinglyLinkedList(const SinglyLinkedList&) = delete;
-        // SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
+        SinglyLinkedList(const SinglyLinkedList& other);
+        SinglyLinkedList& operator=(const SinglyLinkedList& other);
+        T& operator[](unsigned long ind);
+        const T& operator[](unsigned long ind) const;
         
         void prepend(T value);
         void append(T value);
@@ -24,6 +26,7 @@ class SinglyLinkedList {
         T front() const;
         T end() const;
         bool contains(T value);
+        void clear();
 
         unsigned long size() const {return size_;}
 
@@ -36,6 +39,8 @@ class SinglyLinkedList {
         Node* head_;
         Node* tail_;
         unsigned long size_;
+
+        void copy(const SinglyLinkedList& other);
 
 };
 
@@ -56,7 +61,7 @@ SinglyLinkedList<T>::SinglyLinkedList(T data) {
 }
 
 template <typename T>
-SinglyLinkedList<T>::~SinglyLinkedList() {
+void SinglyLinkedList<T>::clear() {
     Node* current = head_;
     while (current) {
         Node* tmpNode = current;
@@ -64,6 +69,73 @@ SinglyLinkedList<T>::~SinglyLinkedList() {
         delete tmpNode;
     }
     head_ = tail_ = nullptr;
+    size_ = 0;
+}
+
+template <typename T>
+SinglyLinkedList<T>::~SinglyLinkedList() {
+    clear();
+}
+
+template <typename T>
+void SinglyLinkedList<T>::copy(const SinglyLinkedList<T>& other) {
+    if (other.head_ == nullptr) {
+        head_ = tail_ = nullptr;
+        size_ = 0;
+        return;
+    }
+    head_ = new Node(other.head_->data);
+    size_ = 1;
+    Node* current = head_;
+    Node* otherCurrent = other.head_;
+    while (otherCurrent->next) {
+        otherCurrent = otherCurrent->next;
+        current->next = new Node(otherCurrent->data);
+        current = current->next;
+        size_++;
+    }
+    tail_ = current;
+}
+
+template <typename T>
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other) {
+    head_ = tail_ = nullptr;
+    size_ = 0;
+    copy(other);
+}
+
+template <typename T>
+SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& other) {
+    if (this == &other) {
+        return *this;
+    }
+    clear();
+    copy(other);
+    return *this;
+}
+
+template <typename T>
+T& SinglyLinkedList<T>::operator[](unsigned long ind){
+    if (ind >= size_) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    Node* current = head_;
+    for (unsigned long i = 0; i < ind; ++i) {
+        current = current->next;
+    }
+    return current->data;
+}
+
+template <typename T>
+const T& SinglyLinkedList<T>::operator[](unsigned long ind) const{
+    if (ind >= size_) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    Node* current = head_;
+    for (unsigned long i = 0; i < ind; ++i) {
+        current = current->next;
+    }
+    return current->data;
 }
 
 template <typename T>
