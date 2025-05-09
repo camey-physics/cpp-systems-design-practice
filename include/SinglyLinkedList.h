@@ -16,6 +16,8 @@ class SinglyLinkedList {
 
         SinglyLinkedList(const SinglyLinkedList& other);
         SinglyLinkedList& operator=(const SinglyLinkedList& other);
+        SinglyLinkedList(SinglyLinkedList&& other);
+        SinglyLinkedList& operator=(SinglyLinkedList&& other);
         T& operator[](unsigned long ind);
         const T& operator[](unsigned long ind) const;
         
@@ -111,6 +113,28 @@ SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& o
     }
     clear();
     copy(other);
+    return *this;
+}
+
+template <typename T>
+SinglyLinkedList<T>::SinglyLinkedList(SinglyLinkedList<T>&& other) {
+    this->head_ = other.head_;
+    this->tail_ = other.tail_;
+    this->size_ = other.size_;
+    other.head_ = nullptr;
+    other.tail_ = nullptr;
+    other.size_ = 0;
+}
+
+template <typename T>
+SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(SinglyLinkedList<T>&& other) {
+    this->clear();
+    this->head_ = other.head_;
+    this->tail_ = other.tail_;
+    this->size_ = other.size_;
+    other.head_ = nullptr;
+    other.tail_ = nullptr;
+    other.size_ = 0;
     return *this;
 }
 
