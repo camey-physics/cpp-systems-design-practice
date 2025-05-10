@@ -126,70 +126,70 @@ TEST(SinglyLinkedListTest, SeveralRemovedElementsListSize) {
     EXPECT_EQ(l.size(), 15);
 }
 
-// TEST(SinglyLinkedListTest, ClearNonEmptyList) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 20; i++) {
-//         l.prepend(i*2);
-//     }
-//     l.clear();
-//     EXPECT_EQ(l.size(), 0);
-// }
+TEST(SinglyLinkedListTest, ClearNonEmptyList) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 20; i++) {
+        l.prepend(i*2);
+    }
+    l.clear();
+    EXPECT_EQ(l.size(), 0);
+}
 
-// TEST(SinglyLinkedListTest, AccessOperatorOverload) {
-//     SinglyLinkedList<int> l;
-//     for (int i = 0; i < 10; i++) {
-//         l.append(i);
-//     }
-//     for (int i = 0; i < 10; i += 2) {
-//         EXPECT_EQ(l[i], i);
-//     }
-// }
+TEST(SinglyLinkedListTest, AccessOperatorOverload) {
+    SinglyLinkedList<int> l;
+    for (int i = 0; i < 10; i++) {
+        l.append(i);
+    }
+    for (int i = 0; i < 10; i += 2) {
+        EXPECT_EQ(l[i], i);
+    }
+}
 
-// TEST(SinglyLinkedListTest, EmptyListCopyConstructor) {
-//     SinglyLinkedList<float> l;
-//     SinglyLinkedList<float> l2(l);
-//     EXPECT_EQ(l2.size(), 0);
-// }
+TEST(SinglyLinkedListTest, EmptyListCopyConstructor) {
+    SinglyLinkedList<float> l;
+    SinglyLinkedList<float> l2(l);
+    EXPECT_EQ(l2.size(), 0);
+}
 
-// TEST(SinglyLinkedListTest, NonEmptyListCopyConstructor) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 10; ++i) {
-//         l.append(i);
-//     }
-//     SinglyLinkedList<float> l2 = l;
-//     for (int i = 0; i < 10; ++i) {
-//         EXPECT_EQ(l2[i], l[i]);
-//     }
-// }
+TEST(SinglyLinkedListTest, NonEmptyListCopyConstructor) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    SinglyLinkedList<float> l2 = l;
+    for (int i = 0; i < 10; ++i) {
+        EXPECT_EQ(l2[i], l[i]);
+    }
+}
 
-// TEST(SinglyLinkedListTest, NonEmptyListCopyAssignment) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 10; ++i) {
-//         l.append(i);
-//     }
-//     SinglyLinkedList<float> l2;
-//     l2 = l;
-//     for (int i = 0; i < 10; ++i) {
-//         EXPECT_EQ(l2[i], l[i]);
-//     }
-// }
+TEST(SinglyLinkedListTest, NonEmptyListCopyAssignment) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    SinglyLinkedList<float> l2;
+    l2 = l;
+    for (int i = 0; i < 10; ++i) {
+        EXPECT_EQ(l2[i], l[i]);
+    }
+}
 
-// TEST(SinglyLinkedListTest, CopyMutationProtection) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 10; ++i) {
-//         l.append(i);
-//     }
-//     SinglyLinkedList<float> l2;
-//     l2 = l;
-//     l.prepend(100);
-//     EXPECT_EQ(l2[0], 0);
-// }
+TEST(SinglyLinkedListTest, CopyMutationProtection) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    SinglyLinkedList<float> l2;
+    l2 = l;
+    l.prepend(100);
+    EXPECT_EQ(l2[0], 0);
+}
 
-// TEST(SinglyLinkedListTest, SelfAssignment) {
-//     SinglyLinkedList<float> l(10);
-//     l = l;
-//     EXPECT_EQ(l[0], 10);
-// }
+TEST(SinglyLinkedListTest, SelfAssignment) {
+    SinglyLinkedList<float> l(10);
+    l = l;
+    EXPECT_EQ(l[0], 10);
+}
 
 // TEST(SinglyLinkedListTest, MoveConstructor) {
 //     SinglyLinkedList<float> l;

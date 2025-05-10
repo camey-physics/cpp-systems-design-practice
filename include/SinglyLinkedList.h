@@ -20,12 +20,12 @@ class SinglyLinkedList {
         SinglyLinkedList(T data);
         ~SinglyLinkedList();
 
-        // SinglyLinkedList(const SinglyLinkedList& other);
-        // SinglyLinkedList& operator=(const SinglyLinkedList& other);
+        SinglyLinkedList(const SinglyLinkedList& other);
+        SinglyLinkedList& operator=(const SinglyLinkedList& other);
         // SinglyLinkedList(SinglyLinkedList&& other);
         // SinglyLinkedList& operator=(SinglyLinkedList&& other);
-        // T& operator[](unsigned long ind);
-        // const T& operator[](unsigned long ind) const;
+        T& operator[](unsigned long ind);
+        const T& operator[](unsigned long ind) const;
         
         void prepend(T value);
         void append(T value);
@@ -80,42 +80,47 @@ SinglyLinkedList<T>::~SinglyLinkedList() {
     delete dummy_;
 }
 
-// template <typename T>
-// void SinglyLinkedList<T>::copy(const SinglyLinkedList<T>& other) {
-//     if (other.head_ == nullptr) {
-//         head_ = tail_ = nullptr;
-//         size_ = 0;
-//         return;
-//     }
-//     head_ = new Node(other.head_->data);
-//     size_ = 1;
-//     Node* current = head_;
-//     Node* otherCurrent = other.head_;
-//     while (otherCurrent->next) {
-//         otherCurrent = otherCurrent->next;
-//         current->next = new Node(otherCurrent->data);
-//         current = current->next;
-//         size_++;
-//     }
-//     tail_ = current;
-// }
+template <typename T>
+void SinglyLinkedList<T>::copy(const SinglyLinkedList<T>& other) {
+    Node* otherCurrent = other.dummy_;
+    Node* current = dummy_;
+    size_ = 0;
 
-// template <typename T>
-// SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other) {
-//     head_ = tail_ = nullptr;
-//     size_ = 0;
-//     copy(other);
-// }
+    // if (other.head_ == nullptr) {
+    //     head_ = tail_ = nullptr;
+    //     size_ = 0;
+    //     return;
+    // }
+    // head_ = new Node(other.head_->data);
+    // size_ = 1;
+    // Node* current = head_;
+    // Node* otherCurrent = other.head_;
+    while (otherCurrent->next) {
+        otherCurrent = otherCurrent->next;
+        current->next = new Node(otherCurrent->data);
+        current = current->next;
+        size_++;
+    }
+    tail_ = current;
+}
 
-// template <typename T>
-// SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& other) {
-//     if (this == &other) {
-//         return *this;
-//     }
-//     clear();
-//     copy(other);
-//     return *this;
-// }
+template <typename T>
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other) {
+    dummy_ =  new Node(T(), nullptr);
+    tail_ = nullptr;
+    size_ = 0;
+    copy(other);
+}
+
+template <typename T>
+SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& other) {
+    if (this == &other) {
+        return *this;
+    }
+    clear();
+    copy(other);
+    return *this;
+}
 
 // template <typename T>
 // SinglyLinkedList<T>::SinglyLinkedList(SinglyLinkedList<T>&& other) {
@@ -139,29 +144,29 @@ SinglyLinkedList<T>::~SinglyLinkedList() {
 //     return *this;
 // }
 
-// template <typename T>
-// T& SinglyLinkedList<T>::operator[](unsigned long ind){
-//     if (ind >= size_) {
-//         throw std::out_of_range("Index out of bounds");
-//     }
-//     Node* current = head_;
-//     for (unsigned long i = 0; i < ind; ++i) {
-//         current = current->next;
-//     }
-//     return current->data;
-// }
+template <typename T>
+T& SinglyLinkedList<T>::operator[](unsigned long ind){
+    if (ind >= size_) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    Node* current = dummy_->next;
+    for (unsigned long i = 0; i < ind; ++i) {
+        current = current->next;
+    }
+    return current->data;
+}
 
-// template <typename T>
-// const T& SinglyLinkedList<T>::operator[](unsigned long ind) const{
-//     if (ind >= size_) {
-//         throw std::out_of_range("Index out of bounds");
-//     }
-//     Node* current = head_;
-//     for (unsigned long i = 0; i < ind; ++i) {
-//         current = current->next;
-//     }
-//     return current->data;
-// }
+template <typename T>
+const T& SinglyLinkedList<T>::operator[](unsigned long ind) const{
+    if (ind >= size_) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    Node* current = dummy_->next;
+    for (unsigned long i = 0; i < ind; ++i) {
+        current = current->next;
+    }
+    return current->data;
+}
 
 template <typename T>
 void SinglyLinkedList<T>::prepend(T value) {
@@ -186,40 +191,6 @@ void SinglyLinkedList<T>::append(T value) {
     size_++;
     return;
 }
-
-// template <typename T>
-// void SinglyLinkedList<T>::remove(T value) {
-//     Node* current = head_;
-//     Node* prev;
-
-//     while (current != nullptr) {
-//         if (current->data == value) {
-//             if (current == head_) {
-//                 if (current == tail_) {
-//                     head_ = nullptr;
-//                     tail_ = nullptr;
-
-//                 }
-//                 else {
-//                     head_ = current->next;
-//                 }
-//             }
-//             else if (current == tail_) {
-//                 tail_ = prev;
-//                 prev->next = nullptr;
-//             }
-//             else {
-//                 prev->next = current->next;
-//             }
-//             delete current;
-//             size_--;
-//             return;
-//         }
-//         prev = current;
-//         current = current->next;
-//     }
-//     return;
-// }
 
 template <typename T>
 void SinglyLinkedList<T>::remove(T value) {
