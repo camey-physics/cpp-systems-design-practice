@@ -1,5 +1,11 @@
 /*
-There are cleaner ways to implement remove() with less branching (e.g. dummy head node)
+Should replace head_ with dummy_ <- will require refactoring of several methods
+Should add several functions:
+pop_front()
+pop_back()
+insert(index, value)
+erase(index)
+comparison (==, !=)
 */
 
 #ifndef SINGLY_LINKED_H
