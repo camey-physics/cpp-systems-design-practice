@@ -22,8 +22,8 @@ class SinglyLinkedList {
 
         SinglyLinkedList(const SinglyLinkedList& other);
         SinglyLinkedList& operator=(const SinglyLinkedList& other);
-        // SinglyLinkedList(SinglyLinkedList&& other);
-        // SinglyLinkedList& operator=(SinglyLinkedList&& other);
+        SinglyLinkedList(SinglyLinkedList&& other) noexcept;
+        SinglyLinkedList& operator=(SinglyLinkedList&& other) noexcept;
         T& operator[](unsigned long ind);
         const T& operator[](unsigned long ind) const;
         
@@ -86,15 +86,6 @@ void SinglyLinkedList<T>::copy(const SinglyLinkedList<T>& other) {
     Node* current = dummy_;
     size_ = 0;
 
-    // if (other.head_ == nullptr) {
-    //     head_ = tail_ = nullptr;
-    //     size_ = 0;
-    //     return;
-    // }
-    // head_ = new Node(other.head_->data);
-    // size_ = 1;
-    // Node* current = head_;
-    // Node* otherCurrent = other.head_;
     while (otherCurrent->next) {
         otherCurrent = otherCurrent->next;
         current->next = new Node(otherCurrent->data);
@@ -105,10 +96,7 @@ void SinglyLinkedList<T>::copy(const SinglyLinkedList<T>& other) {
 }
 
 template <typename T>
-SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other) {
-    dummy_ =  new Node(T(), nullptr);
-    tail_ = nullptr;
-    size_ = 0;
+SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other) : SinglyLinkedList() {
     copy(other);
 }
 
@@ -122,27 +110,27 @@ SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& o
     return *this;
 }
 
-// template <typename T>
-// SinglyLinkedList<T>::SinglyLinkedList(SinglyLinkedList<T>&& other) {
-//     this->head_ = other.head_;
-//     this->tail_ = other.tail_;
-//     this->size_ = other.size_;
-//     other.head_ = nullptr;
-//     other.tail_ = nullptr;
-//     other.size_ = 0;
-// }
+template <typename T>
+SinglyLinkedList<T>::SinglyLinkedList(SinglyLinkedList<T>&& other) noexcept : SinglyLinkedList() {
+    this->dummy_->next = other.dummy_->next;
+    this->tail_ = other.tail_;
+    this->size_ = other.size_;
+    other.dummy_->next = nullptr;
+    other.tail_ = nullptr;
+    other.size_ = 0;
+}
 
-// template <typename T>
-// SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(SinglyLinkedList<T>&& other) {
-//     this->clear();
-//     this->head_ = other.head_;
-//     this->tail_ = other.tail_;
-//     this->size_ = other.size_;
-//     other.head_ = nullptr;
-//     other.tail_ = nullptr;
-//     other.size_ = 0;
-//     return *this;
-// }
+template <typename T>
+SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(SinglyLinkedList<T>&& other) noexcept {
+    this->clear();
+    this->dummy_->next = other.dummy_->next;
+    this->tail_ = other.tail_;
+    this->size_ = other.size_;
+    other.dummy_->next = nullptr;
+    other.tail_ = nullptr;
+    other.size_ = 0;
+    return *this;
+}
 
 template <typename T>
 T& SinglyLinkedList<T>::operator[](unsigned long ind){

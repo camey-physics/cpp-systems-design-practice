@@ -191,39 +191,39 @@ TEST(SinglyLinkedListTest, SelfAssignment) {
     EXPECT_EQ(l[0], 10);
 }
 
-// TEST(SinglyLinkedListTest, MoveConstructor) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 20; ++i) {
-//         l.append(i);
-//     }
-//     float* fAddress[20];
-//     for (int i = 0; i < 20; ++i) {
-//         fAddress[i] = &l[i];
-//     }
-//     SinglyLinkedList<float> l2 = std::move(l);
-//     for (int i = 0; i < 20; ++i) {
-//         EXPECT_EQ(fAddress[i], &l2[i]);
-//         EXPECT_EQ(l2[i], i);
-//     }
-//     EXPECT_EQ(l.size(), 0);
-//     EXPECT_EQ(l2.size(), 20);
-// }
+TEST(SinglyLinkedListTest, MoveConstructor) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 20; ++i) {
+        l.append(i);
+    }
+    float* fAddress[20];
+    for (int i = 0; i < 20; ++i) {
+        fAddress[i] = &l[i];
+    }
+    SinglyLinkedList<float> l2 = std::move(l);
+    for (int i = 0; i < 20; ++i) {
+        EXPECT_EQ(fAddress[i], &l2[i]);
+        EXPECT_EQ(l2[i], i);
+    }
+    EXPECT_EQ(l.size(), 0);
+    EXPECT_EQ(l2.size(), 20);
+}
 
-// TEST(SinglyLinkedListTest, MoveAssignment) {
-//     SinglyLinkedList<float> l;
-//     for (int i = 0; i < 20; ++i) {
-//         l.append(i);
-//     }
-//     float* fAddress[20];
-//     for (int i = 0; i < 20; ++i) {
-//         fAddress[i] = &l[i];
-//     }
-//     SinglyLinkedList<float> l2;
-//     l2 = std::move(l);
-//     for (int i = 0; i < 20; ++i) {
-//         EXPECT_EQ(fAddress[i], &l2[i]);
-//         EXPECT_EQ(l2[i], i);
-//     }
-//     EXPECT_EQ(l.size(), 0);
-//     EXPECT_EQ(l2.size(), 20);
-// }
+TEST(SinglyLinkedListTest, MoveAssignment) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 20; ++i) {
+        l.append(i);
+    }
+    float* fAddress[20];
+    for (int i = 0; i < 20; ++i) {
+        fAddress[i] = &l[i];
+    }
+    SinglyLinkedList<float> l2;
+    l2 = std::move(l);
+    for (int i = 0; i < 20; ++i) {
+        EXPECT_EQ(fAddress[i], &l2[i]);
+        EXPECT_EQ(l2[i], i);
+    }
+    EXPECT_EQ(l.size(), 0);
+    EXPECT_EQ(l2.size(), 20);
+}
