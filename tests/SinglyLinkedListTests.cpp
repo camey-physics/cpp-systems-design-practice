@@ -17,7 +17,7 @@ TEST(SinglyLinkedListTest, NonEmptyListFront) {
 
 TEST(SinglyLinkedListTest, EmptyListFront) {
     SinglyLinkedList<int> l;
-    EXPECT_THROW(l.front(), std::runtime_error);
+    EXPECT_THROW(l.front(), std::out_of_range);
 }
 
 TEST(SinglyLinkedListTest, EmptyListPrepend) {
@@ -226,4 +226,69 @@ TEST(SinglyLinkedListTest, MoveAssignment) {
     }
     EXPECT_EQ(l.size(), 0);
     EXPECT_EQ(l2.size(), 20);
+}
+
+TEST(SinglyLinkedListTest, EraseOutOfBounds) {
+    SinglyLinkedList<float> l;
+    EXPECT_THROW(l.erase(0), std::out_of_range);
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    EXPECT_THROW(l.erase(10), std::out_of_range);
+}
+
+TEST(SinglyLinkedListTest, EraseNonEmptyList) {
+    {
+        SinglyLinkedList<float> l;
+        for (int i = 0; i < 10; ++i) {
+            l.append(i);
+        }
+        l.erase(0);
+        EXPECT_EQ(l.size(), 9);
+        EXPECT_EQ(l.front(), 1);
+    }
+    {
+        SinglyLinkedList<float> l;
+        for (int i = 0; i < 10; ++i) {
+            l.append(i);
+        }
+        l.erase(5);
+        EXPECT_EQ(l.size(), 9);
+        EXPECT_EQ(l[4], 4);
+        EXPECT_EQ(l[5], 6);
+    }
+}
+
+TEST(SinglyLinkedListTest, PopFrontEmptyList) {
+    SinglyLinkedList<float> l;
+    EXPECT_THROW(l.pop_front(), std::out_of_range);
+    
+}
+
+TEST(SinglyLinkedListTest, PopFrontNonEmptyList) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    for (int i = 0; i < 10; ++i) {
+        float data = l.pop_front();
+        EXPECT_EQ(data, i);
+    }   
+}
+
+TEST(SinglyLinkedListTest, PopBackEmptyList) {
+    SinglyLinkedList<float> l;
+    EXPECT_THROW(l.pop_back(), std::out_of_range);
+    
+}
+
+TEST(SinglyLinkedListTest, PopBackNonEmptyList) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.prepend(i);
+    }
+    for (int i = 0; i < 10; ++i) {
+        float data = l.pop_back();
+        EXPECT_EQ(data, i);
+    }   
 }

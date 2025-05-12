@@ -30,6 +30,9 @@ class SinglyLinkedList {
         void prepend(T value);
         void append(T value);
         void remove(T value);
+        void erase(unsigned long ind);
+        T pop_front();
+        T pop_back();
 
         T front() const;
         T end() const;
@@ -37,6 +40,7 @@ class SinglyLinkedList {
         void clear();
 
         unsigned long size() const {return size_;}
+        bool empty() const { return size_ == 0; }
 
     private:
         struct Node {
@@ -49,6 +53,7 @@ class SinglyLinkedList {
         unsigned long size_;
 
         void copy(const SinglyLinkedList& other);
+        T erase_and_return(unsigned long ind);
 
 };
 
@@ -205,24 +210,64 @@ void SinglyLinkedList<T>::remove(T value) {
 }
 
 template <typename T>
+T SinglyLinkedList<T>::erase_and_return(unsigned long ind) {
+    if (ind >= size_) {
+        throw std::out_of_range("Index is out of bounds");
+    }
+    Node* current = dummy_->next;
+    Node* prev = dummy_;
+    unsigned long cnt = 0;
+    while (cnt < ind) {
+        prev = current;
+        current = current->next;
+        cnt++;
+    }
+    prev->next = current->next;
+    T data = current->data;
+    if (tail_ == current) {
+        tail_ = prev;
+    }
+    delete current;
+    size_--;
+    return data;
+}
+
+
+template <typename T>
+void SinglyLinkedList<T>::erase(unsigned long ind) {
+    (void) erase_and_return(ind);
+}
+
+template <typename T>
+T SinglyLinkedList<T>::pop_front() {
+    if (empty()) {
+        throw std::out_of_range("List is empty");
+    }
+    return erase_and_return(0);
+}
+
+template <typename T>
+T SinglyLinkedList<T>::pop_back() {
+    if (empty()) {
+        throw std::out_of_range("List is empty");
+    }
+    return erase_and_return(size_ - 1);
+}
+
+template <typename T>
 T SinglyLinkedList<T>::front() const {
-    Node* head = dummy_->next;
-    if (head) {
-        return head->data;
+    if (empty()) {
+        throw std::out_of_range("List is empty");
     }
-    else {
-        throw std::runtime_error("List is empty");
-    }
+    return dummy_->next->data;
 }
 
 template <typename T>
 T SinglyLinkedList<T>::end() const {
-    if (tail_ != nullptr) {
-        return tail_->data;
+    if (empty()) {
+        throw std::out_of_range("List is empty");
     }
-    else {
-        throw std::runtime_error("List is empty");
-    }
+    return tail_->data;
 }
 
 template <typename T>
