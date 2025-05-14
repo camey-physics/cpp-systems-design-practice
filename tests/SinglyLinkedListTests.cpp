@@ -292,3 +292,23 @@ TEST(SinglyLinkedListTest, PopBackNonEmptyList) {
         EXPECT_EQ(data, i);
     }   
 }
+
+TEST(SinglyLinkedListTest, InsertEmptyList) {
+    SinglyLinkedList<float> l;
+    l.insert(0, 10);
+    EXPECT_EQ(l[0], 10);
+}
+
+
+TEST(SinglyLinkedListTest, MultipleInsertMidList) {
+    SinglyLinkedList<float> l;
+    for (int i = 0; i < 10; ++i) {
+        l.append(i);
+    }
+    for (int i = 0; i < 10; ++i) {
+        EXPECT_EQ(l[i], i);
+    }
+    l.insert(5, 100);
+    EXPECT_EQ(l[5], 100);
+    EXPECT_EQ(l[6], 5);
+}

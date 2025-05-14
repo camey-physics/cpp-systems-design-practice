@@ -1,10 +1,6 @@
 /*
 Should replace head_ with dummy_ <- will require refactoring of several methods
 Should add several functions:
-pop_front()
-pop_back()
-insert(index, value)
-erase(index)
 comparison (==, !=)
 */
 
@@ -33,6 +29,7 @@ class SinglyLinkedList {
         void erase(unsigned long ind);
         T pop_front();
         T pop_back();
+        void insert(unsigned long ind, T value);
 
         T front() const;
         T end() const;
@@ -252,6 +249,28 @@ T SinglyLinkedList<T>::pop_back() {
         throw std::out_of_range("List is empty");
     }
     return erase_and_return(size_ - 1);
+}
+
+template <typename T>
+void SinglyLinkedList<T>::insert(unsigned long ind, T value) {
+    if (ind > size_) {
+        throw std::out_of_range("Index larger than list size");
+    }
+    else if (ind == size_) {
+        append(value);
+        return;
+    }
+    Node* current = dummy_->next;
+    Node* prev = dummy_;
+    unsigned long cnt = 0;
+    while (cnt < ind) {
+        prev = current;
+        current = current->next;
+        cnt++;
+    }
+    Node* new_node = new Node(value, current);
+    prev->next = new_node;
+    size_++;
 }
 
 template <typename T>
