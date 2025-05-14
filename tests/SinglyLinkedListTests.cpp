@@ -311,4 +311,6 @@ TEST(SinglyLinkedListTest, MultipleInsertMidList) {
     l.insert(5, 100);
     EXPECT_EQ(l[5], 100);
     EXPECT_EQ(l[6], 5);
+    EXPECT_EQ(l.size(), 11);
+    EXPECT_EQ(l.end(), 9);
 }
