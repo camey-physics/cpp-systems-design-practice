@@ -3,4 +3,5 @@ A growing collection of low-level C++ exercises to reinforce core systems concep
 
 ### Implemented
 - [x] Shared Pointer (manual reference counting)
-- [ ] Vector-like container (dynamic array)
+- [x] Vector-like container (dynamic array)
+- [x] Singly-linked list
