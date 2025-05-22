@@ -6,8 +6,13 @@
 template <typename T>
 class BinarySearchTree {
     public:
+        BinarySearchTree() = default;
+        BinarySearchTree(const T& value) : root_(new Node(value)) {}
+        BinarySearchTree(T&& value) : root_(new Node(std::move(value))) {}
 
     private:
+        Node* root_ = nullptr;
+
         struct Node {
             T data;
             Node* left = nullptr;
